@@ -7,18 +7,21 @@ import matplotlib.pyplot as plt
 # Set the aesthetic style of the plots
 sns.set_theme(style="whitegrid")
 
+
 # Load dataset
 @st.cache
 def load_data():
     data = pd.read_csv('heart_disease.csv')
     return data
 
+
 df = load_data()
 
 # Sidebar for navigation
 st.sidebar.title('Heart Disease Data Visualizations')
 options = st.sidebar.radio('Select a Chart Type:',
-    ('Summary Statistics', 'Histogram', 'Correlation Heatmap', 'Scatter Plot', 'Pair Plot', 'Box Plot'))
+                           ('Summary Statistics', 'Histogram', 'Correlation Heatmap', 'Scatter Plot', 'Pair Plot',
+                            'Box Plot'))
 
 # Main content
 st.title('Heart Disease Data Exploration')
@@ -81,3 +84,6 @@ elif options == 'Box Plot':
     fig, ax = plt.subplots()
     sns.boxplot(x=df[column], ax=ax)
     st.pyplot(fig)
+
+
+# Commentaire nul
