@@ -4,7 +4,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import numpy as np
-from Home import load_data
+from streamlit_app_homepage import load_data
 
 # Load dataset
 df = load_data()
