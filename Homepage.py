@@ -15,12 +15,10 @@ def load_data():
 
 
 df = load_data()
-
-# Sidebar for navigation
-st.sidebar.title('Heart Disease Data Visualizations')
-
 # Main content
+# TODO: add presentation text of the dataset and features used
 st.title('Heart Disease Data Exploration')
 st.write('Summary Statistics')
 st.dataframe(df.describe())
+
 
