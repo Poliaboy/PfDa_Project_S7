@@ -7,6 +7,7 @@ import io
 
 # Set the aesthetic style of the plots
 sns.set_theme(style="whitegrid")
+st.set_page_config(layout="wide")
 
 
 def get_image_download_link(fig, filename="plot.png", text="Download plot as PNG"):
