@@ -30,6 +30,11 @@ As an additional component, a Streamlit web application was developed. This app 
 - **User-friendly Interface**: Allowing users to input personal health data and receive a risk prediction.
 - **Interactive Data Exploration**: Providing visualizations for a more engaging data exploration experience.
 
+The app can be run locally by executing the following command in the terminal:
+
+```
+streamlit run ./Homepage.py
+```
 ## Data and Model
 
 The analysis and predictions are based on the `heart_disease.csv` dataset, which includes various health parameters. A machine learning model was trained on this dataset and is utilized for predictions in both the Jupyter Notebook and the Streamlit app.
