@@ -49,8 +49,8 @@ categorical_cols = [
 st.title('Heart Disease Data Exploration')
 st.write('This dataset contains information about patients and their heart disease status.')
 st.write(f"Number of patients: {df.shape[0]}")
-st.write(f"Average age: {df['age'].mean():.2f}")  # Replace 'age' with your actual age column name
-gender_count = df['gender'].value_counts()  # Replace 'sex' with your actual gender column name
+st.write(f"Average age: {df['age'].mean():.2f}")
+gender_count = df['gender'].value_counts()
 st.write(f"Gender distribution (Male/Female): {gender_count[0]} / {gender_count[1]}")
 if st.toggle('Show Dataset .describe()'):
     st.dataframe(df.describe())

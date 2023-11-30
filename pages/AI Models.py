@@ -22,7 +22,6 @@ def load_preprocessor():
 def preprocess_data(data, preprocessor):
     # Apply the preprocessor to the input data
     preprocessed_data = preprocessor.transform(data)
-
     # Return a DataFrame for easy visualization and manipulation
     return pd.DataFrame(preprocessed_data)
 
