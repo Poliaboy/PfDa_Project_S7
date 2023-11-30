@@ -38,11 +38,7 @@ def main():
              "chosen for its effectiveness in binary classification tasks. "
              "On average, this model achieves an accuracy of around 85%, "
              "making it a reliable tool for preliminary assessment.")
-    # User input for age and gender
-    age = st.number_input("Enter your age", min_value=1, max_value=120, value=30)
-    gender = st.selectbox("Select your gender", options=[0, 1], format_func=lambda x: "Female" if x == 0 else "Male")
 
-    # Default values for other features
     default_values = {
         'chest_pain_type': 0,
         'resting_blood_pressure': 120,
@@ -51,7 +47,7 @@ def main():
         'resting_ecg_results': 0,
         'maximum_heart_rate_achieved': 150,
         'exercise_induced_angina': 0,
-        'st_depression_induced_by_exercise_relative_to_rest': 0,
+        'st_depression_induced_by_exercise_relative_to_rest': 0.0,
         'slope_of_peak_exercise_st_segment': 2,
         'number_of_major_vessels_colored_by_flourosopy': 0,
         'thalassemia': 3
@@ -65,16 +61,45 @@ def main():
         'thalassemia': [3, 6, 7]
     }
 
+    feature_descriptions = {
+        'chest_pain_type': "Chest pain type (1: typical angina, 2: atypical angina, "
+                           "3: non-anginal pain, 4: asymptomatic).",
+        'resting_blood_pressure': "Resting blood pressure in mm Hg on admission to the hospital.",
+        'serum_cholesterol_mg_per_dl': "Serum cholesterol in mg/dl.",
+        'fasting_blood_sugar_gt_120_mg_per_dl': "Fasting blood sugar > 120 mg/dl (1 = true; 0 = false).",
+        'resting_ecg_results': "Resting electrocardiographic results (0: normal, 1: having ST-T wave abnormality, "
+                               "2: showing probable or definite left ventricular hypertrophy).",
+        'maximum_heart_rate_achieved': "Maximum heart rate achieved.",
+        'exercise_induced_angina': "Exercise induced angina (1 = yes; 0 = no).",
+        'st_depression_induced_by_exercise_relative_to_rest': "ST depression induced by exercise relative to rest.",
+        'slope_of_peak_exercise_st_segment': "Slope of the peak exercise ST segment (1: upsloping, "
+                                             "2: flat, 3: downsloping).",
+        'number_of_major_vessels_colored_by_flourosopy': "Number of major vessels (0-3) colored by flourosopy.",
+        'thalassemia': "Thalassemia (3: normal, 6: fixed defect, 7: reversible defect).",
+    }
+    # User input for age and gender
+    age = st.number_input("Enter your age", min_value=1, max_value=120, value=30)
+    gender = st.selectbox("Select your gender", options=[0, 1], format_func=lambda x: "Female" if x == 0 else "Male")
     # Option for users to modify the default values
     if st.checkbox("Modify other values"):
         for key, value in default_values.items():
             if key in ['resting_blood_pressure', 'serum_cholesterol_mg_per_dl',
-                       'maximum_heart_rate_achieved', 'st_depression_induced_by_exercise_relative_to_rest',
+                       'maximum_heart_rate_achieved',
                        'number_of_major_vessels_colored_by_flourosopy']:
-                # Numeric input
+                # Numeric input (int)
+                st.divider()
+                st.write(f"{key.replace('_', ' ').title()}: {feature_descriptions[key]}")
                 default_values[key] = st.number_input(f"{key.replace('_', ' ').title()}", value=value)
+
+            elif key == "st_depression_induced_by_exercise_relative_to_rest":
+                # Numeric input  (float)
+                st.divider()
+                st.write(f"{key.replace('_', ' ').title()}: {feature_descriptions[key]}")
+                default_values[key] = st.number_input(f"{key.replace('_', ' ').title()}", value=value, step=0.1)
             else:
                 # Categorical input
+                st.divider()
+                st.write(f"{key.replace('_', ' ').title()}: {feature_descriptions[key]}")
                 default_values[key] = st.selectbox(f"{key.replace('_', ' ').title()}",
                                                    options=categorical_options[key],
                                                    index=categorical_options[key].index(value))
@@ -89,7 +114,10 @@ def main():
     if st.button("Predict"):
         prediction = model.predict(features)
         result = "ill" if prediction[0] == 1 else "not ill"
-        st.success(f"The model predicts the patient is {result}.")
+        if result == "ill":
+            st.error(f"The model predicts the patient is {result}.")
+        else:
+            st.success(f"The model predicts the patient is {result}.")
 
 
 if __name__ == "__main__":
